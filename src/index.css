@@ -1,13 +1,75 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.container {
+    @apply
+    max-w-xl mx-auto flex flex-col shadow-xl
+    p-3
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.title {
+    @apply border-b-2 text-center text-2xl p-1
+}
+
+.newTodo {
+
+}
+
+.wrapper {
+    @apply py-2
+}
+
+.input {
+    @apply w-full bg-gray-100 rounded p-2
+    focus:border focus:outline-none
+}
+
+.todos {
+
+}
+
+.info {
+    @apply flex justify-between items-center mt-2
+}
+
+.todo {
+    @apply p-1 border my-0.5 rounded
+}
+
+.todo__label {
+    @apply flex items-center
+}
+
+.todo__checkbox {
+    @apply mr-2
+}
+
+.todo__text {
+    @apply font-semibold
+}
+
+.done {
+    @apply line-through
+}
+
+.buttons {
+    @apply flex flex-row
+}
+
+.btn {
+    @apply text-base font-medium rounded-lg px-2 mx-0.5;
+}
+
+.btn--active {
+    @apply border;
+}
+
+.input {
+    @apply border;
+}
+
+.label {
+    @apply border;
 }
