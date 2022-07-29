@@ -1,25 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import NewTodo from "./components/NewTodo";
 import Actions from "./components/Actions";
 import TodoList from './components/TodoList';
-import TodoProvider from "./context/context";
+import {TodoListContextInterface, TodoListCtx} from "./context/context";
 
 const App = () => {
-    return (<TodoProvider>
-            <div className={"container"}>
-                <div className={"title"}>todos</div>
-                <div className={"wrapper"}>
-                    <NewTodo/>
-                    <TodoList/>
-                    <Actions/>
-                </div>
-
+    const { setTodosLS } = React.useContext(TodoListCtx) as TodoListContextInterface;
+    useEffect(() => {
+        let todos = localStorage.getItem("todos")
+        if (todos) {
+            setTodosLS(JSON.parse(todos))
+        }
+    }, [])
+    return (
+        <div className={"container"}>
+            <div className={"title"}>todos</div>
+            <div className={"wrapper"}>
+                <NewTodo/>
+                <TodoList/>
+                <Actions/>
             </div>
-        </TodoProvider>
-
+        </div>
     )
-
 }
 
 export default App;

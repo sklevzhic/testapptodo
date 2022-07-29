@@ -14,8 +14,10 @@
 }
 
 .newTodo {
-
+    @apply flex
 }
+
+
 
 .wrapper {
     @apply py-2

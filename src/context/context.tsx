@@ -21,6 +21,7 @@ export interface TodoListContextInterface {
     addTodo: (t: string) => void,
     updateTodo: (id: number) => void
     visibleTodos: (t: string) => void,
+    setTodosLS: (todos: ITodo[]) => void,
     clearTodos: () => void,
 }
 
@@ -29,6 +30,11 @@ export const TodoListCtx = createContext<TodoListContextInterface | null>(null);
 export const TodoProvider = ({children}: AuxProps) => {
     const [todos, setTodos] = useState<ITodo[] | []>([])
 
+    const setTodosLS = (todos: ITodo[]) => {
+        setTodos(todos)
+
+    }
+
     const addTodo = (text: string) => {
         let newTodo = {
             text: text,
@@ -36,34 +42,42 @@ export const TodoProvider = ({children}: AuxProps) => {
             completed: false,
             id: Date.now()
         }
-        setTodos([...todos, newTodo])
+        let tempTodos = [...todos, newTodo]
+        setTodos(tempTodos)
+        saveToLS(tempTodos)
     }
-
     const updateTodo = (id: number) => {
-        let todosTemp = todos.map(el => ((el.id === id ? {...el, completed: !el.completed} : el)))
-        setTodos(todosTemp)
+        let tempTodos = todos.map(el => ((el.id === id ? {...el, completed: !el.completed} : el)))
+        setTodos(tempTodos)
+        saveToLS(tempTodos)
     }
-
     const clearTodos = () => {
-        setTodos(todos.filter(el => !el.completed))
+        let tempTodos = todos.filter(el => !el.completed)
+        setTodos(tempTodos)
+        saveToLS(tempTodos)
     }
-
     const visibleTodos = (type: string) => {
+        let tempTodos: ITodo[] = []
         if (type === Buttons.all) {
-            setTodos(todos.map(el => ({...el, visible: true})))
+            tempTodos = todos.map(el => ({...el, visible: true}))
         }
         if (type === Buttons.active) {
-            setTodos(todos.map(el => (!el.completed ? {...el, visible: true} : {...el, visible: false})))
+            tempTodos = todos.map(el => (!el.completed ? {...el, visible: true} : {...el, visible: false}))
         }
         if (type === Buttons.completed) {
-            setTodos(todos.map(el => (el.completed ? {...el, visible: true} : {...el, visible: false})))
+            tempTodos = todos.map(el => (el.completed ? {...el, visible: true} : {...el, visible: false}))
         }
+        setTodos(tempTodos)
+        saveToLS(tempTodos)
     }
 
+    const saveToLS = (todos: ITodo[]) => {
+        localStorage.setItem("todos", JSON.stringify(todos))
+    }
 
     return (
         <TodoListCtx.Provider
-            value={{todos, addTodo, updateTodo, clearTodos, visibleTodos}}
+            value={{todos, addTodo, updateTodo, clearTodos, visibleTodos, setTodosLS}}
         >
             {children}
         </TodoListCtx.Provider>
