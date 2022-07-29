@@ -25,7 +25,7 @@ const Actions = () => {
                 })
             }
         </div>
-        <button className={"btn"} onClick={() => clearTodos()}>Clear completed</button>
+        <button className={"btn"} onClick={clearTodos}>Clear completed</button>
     </div>
 }
 
