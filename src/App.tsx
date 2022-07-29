@@ -1,48 +1,39 @@
 import React from 'react';
 import './App.css';
+import NewTodo from "./components/NewTodo";
+import Information from "./components/Information";
+import TodoList from './components/TodoList';
+import TodoProvider, {useTodoContext} from "./context/context";
 
-function App() {
-    return (
+const App = () => {
+    // const {  } = useContext(TodoListCtx)
+    // const addToDo = (todo: ITodo) => {
+    //     initialValue.todos.push(todo)
+    // }
+    //
+    // const deleteToDo = (id: number) => {
+    //     initialValue.todos.filter(el => el.id !== id)
+    // }
 
-        <div className={"container"}>
-            <div className={"title"}>todos</div>
+    // const completeToDo = (id: number) => {
+    //
+    // }
 
-            <div className={"wrapper"}>
-                <div className={"newTodo"}>
-                    <input
-                        className="input"
-                        type="text" aria-label="Filter projects" placeholder="Filter projects..."/>
+    const fff = useTodoContext()
+    debugger
+    return (<TodoProvider>
+            <div className={"container"}>
+                <div className={"title"}>todos</div>
+
+                <div className={"wrapper"}>
+                    <NewTodo/>
+                    <TodoList/>
+                    <Information/>
                 </div>
-                <div className={"todos"}>
-                    {
-                        [1, 2, 3, 4, 5, 6, 7, 8, 9].map(el => {
-                            return <div className={"todo"}>
-                                <label className="todo__label">
-                                    <input type="checkbox" className="todo__checkbox"/>
-                                    <span className="todo__text">Option 1</span>
-                                </label>
-                            </div>
-                        })
-                    }
-                    <div className={"todo done"}>
-                        <label className="todo__label">
-                            <input type="checkbox" className="todo__checkbox"/>
-                            <span className="todo__text">Option 1</span>
-                        </label>
-                    </div>
-                </div>
-                <div className={"info"}>
-                    <div>2 items left</div>
-                    <div className={"buttons"}>
-                        <button className={"btn"}>All</button>
-                        <button className={"btn"}>Active</button>
-                        <button className={"btn btn--active"}>Completed</button>
-                    </div>
-                    <button className={"btn"}>Clear completed</button>
-                </div>
+
             </div>
+    </TodoProvider>
 
-        </div>
     )
 
 }
