@@ -1,14 +1,9 @@
 import {
     createContext,
-    Dispatch,
     ReactNode,
-    SetStateAction,
-    useContext,
     useState
 } from "react";
-
-
-type TypeSetState<T> = Dispatch<SetStateAction<T>>
+import {Buttons} from "../consts/buttons";
 
 interface AuxProps {
     children: ReactNode
@@ -17,29 +12,62 @@ interface AuxProps {
 export interface ITodo {
     id: number,
     text: string,
-    completed: boolean
+    completed: boolean,
+    visible?: boolean
 }
 
-interface TodoListContextInterface {
+export interface TodoListContextInterface {
     todos: ITodo[],
-    setTodos: TypeSetState<ITodo[]>
+    addTodo: (t: string) => void,
+    updateTodo: (id: number) => void
+    visibleTodos: (t: string) => void,
+    clearTodos: () => void,
 }
 
-const initialValue = {
-    todos: [],
-    setTodos: () => {}
-}
-
-const TodoListCtx = createContext<TodoListContextInterface>(initialValue);
+export const TodoListCtx = createContext<TodoListContextInterface | null>(null);
 
 export const TodoProvider = ({children}: AuxProps) => {
-    const [todos, setTodos] = useState(initialValue.todos)
+    const [todos, setTodos] = useState<ITodo[] | []>([])
+
+    const addTodo = (text: string) => {
+        let newTodo = {
+            text: text,
+            visible: true,
+            completed: false,
+            id: Date.now()
+        }
+        setTodos([...todos, newTodo])
+    }
+
+    const updateTodo = (id: number) => {
+        let todosTemp = todos.map(el => ((el.id === id ? {...el, completed: !el.completed} : el)))
+        setTodos(todosTemp)
+    }
+
+    const clearTodos = () => {
+        setTodos(todos.filter(el => !el.completed))
+    }
+
+    const visibleTodos = (type: string) => {
+        if (type === Buttons.all) {
+            setTodos(todos.map(el => ({...el, visible: true})))
+        }
+        if (type === Buttons.active) {
+            setTodos(todos.map(el => (!el.completed ? {...el, visible: true} : {...el, visible: false})))
+        }
+        if (type === Buttons.completed) {
+            setTodos(todos.map(el => (el.completed ? {...el, visible: true} : {...el, visible: false})))
+        }
+    }
+
 
     return (
-        <TodoListCtx.Provider value={{todos, setTodos}}>{children}</TodoListCtx.Provider>
+        <TodoListCtx.Provider
+            value={{todos, addTodo, updateTodo, clearTodos, visibleTodos}}
+        >
+            {children}
+        </TodoListCtx.Provider>
     );
 }
-
-export const useTodoContext = () => useContext(TodoListCtx);
 
 export default TodoProvider;

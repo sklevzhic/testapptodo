@@ -1,23 +1,16 @@
 import React from "react";
+import {TodoListContextInterface, TodoListCtx} from "../context/context";
+import {TodoItem} from "./TodoItem";
 
 const TodoList = () => {
+    const { todos } = React.useContext(TodoListCtx) as TodoListContextInterface;
+
     return <div className={"todos"}>
         {
-            [1, 2, 3, 4, 5, 6, 7, 8, 9].map(el => {
-                return <div className={"todo"}>
-                    <label className="todo__label">
-                        <input type="checkbox" className="todo__checkbox"/>
-                        <span className="todo__text">Option 1</span>
-                    </label>
-                </div>
+            todos?.map(el => {
+                return <TodoItem key={el.id} todo={el} />
             })
         }
-        <div className={"todo done"}>
-            <label className="todo__label">
-                <input type="checkbox" className="todo__checkbox"/>
-                <span className="todo__text">Option 1</span>
-            </label>
-        </div>
     </div>
 }
 
