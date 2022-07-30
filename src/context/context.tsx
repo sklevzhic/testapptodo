@@ -34,7 +34,6 @@ export const TodoProvider = ({children}: AuxProps) => {
         setTodos(todos)
 
     }
-
     const addTodo = (text: string) => {
         let newTodo = {
             text: text,
@@ -70,11 +69,9 @@ export const TodoProvider = ({children}: AuxProps) => {
         setTodos(tempTodos)
         saveToLS(tempTodos)
     }
-
     const saveToLS = (todos: ITodo[]) => {
         localStorage.setItem("todos", JSON.stringify(todos))
     }
-
     return (
         <TodoListCtx.Provider
             value={{todos, addTodo, updateTodo, clearTodos, visibleTodos, setTodosLS}}
@@ -83,5 +80,7 @@ export const TodoProvider = ({children}: AuxProps) => {
         </TodoListCtx.Provider>
     );
 }
+
+
 
 export default TodoProvider;

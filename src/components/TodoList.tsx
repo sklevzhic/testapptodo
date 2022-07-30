@@ -1,17 +1,20 @@
-import React from "react";
+import React from 'react'
 import {TodoListContextInterface, TodoListCtx} from "../context/context";
 import {TodoItem} from "./TodoItem";
 
-const TodoList = () => {
-    const { todos } = React.useContext(TodoListCtx) as TodoListContextInterface;
+interface TodoListProps {
 
+}
+
+const TodoList: React.FC<TodoListProps> = () => {
+    const {todos} = React.useContext(TodoListCtx) as TodoListContextInterface;
     return <div className={"todos"}>
         {
-            todos?.map(el => {
-                return <TodoItem key={el.id} todo={el} />
-            })
+            todos.length ? todos.map(el => {
+                return <TodoItem key={el.id} todo={el}/>
+            }) : <>Список задач пуст</>
         }
-    </div>
-}
+    </div>;
+};
 
 export default TodoList

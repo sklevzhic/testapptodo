@@ -13,7 +13,7 @@ const Actions = () => {
         visibleTodos(button)
     }
 
-    return <div className={"info"}>
+    return <div className={"actions"}>
         <div>{length} items left</div>
         <div className={"buttons"}>
             {

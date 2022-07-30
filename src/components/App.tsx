@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
-import './App.css';
-import NewTodo from "./components/NewTodo";
-import Actions from "./components/Actions";
-import TodoList from './components/TodoList';
-import {TodoListContextInterface, TodoListCtx} from "./context/context";
+import Actions from './Actions';
+import NewTodo from "./NewTodo";
+import TodoList from './TodoList';
+import {TodoListContextInterface, TodoListCtx} from "../context/context";
 
 const App = () => {
-    const { setTodosLS } = React.useContext(TodoListCtx) as TodoListContextInterface;
+    const {setTodosLS} = React.useContext(TodoListCtx) as TodoListContextInterface;
     useEffect(() => {
         let todos = localStorage.getItem("todos")
         if (todos) {

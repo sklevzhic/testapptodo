@@ -11,7 +11,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({todo}) => {
 
     if (visible) {
         return <div className={`todo ${completed ? "done" : ""}`}>
-            <label className="todo__label">
+            <label className="todo__label"  data-testid="checkbox">
                 <input type="checkbox" className="todo__checkbox" checked={completed} onChange={() => updateTodo(id)}/>
                 <span className="todo__text">{text}</span>
             </label>
